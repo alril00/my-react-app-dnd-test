@@ -1,0 +1,22 @@
+.main-title {
+  border: 2px solid #8b0000;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  background-color: #fff8dc;
+  color: #333;
+}
+
+.dice {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.dice-button {
+  /* font-size: 20px;
+  border-radius: 3px;
+  border: 2px solid #8b0000;
+  background-color: aliceblue; */
+  margin-right: 10px; 
+}
