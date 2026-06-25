@@ -17,21 +17,53 @@ function RaceCard(props: RaceCardProps) {
         <li>{props.bonus}</li>
         <button onClick={props.onSelect}>Взять оружие</button>
       </ul>
-
     </div >
   )
 }
+const classesList = [
+  { id: '1', name: 'Воин', icon: '⚔️', description: 'Мастер ближнего боя и тяжелой брони' },
+  { id: '2', name: 'Маг', icon: '🔮', description: 'Повелевает стихиями и читает древние заклинания' },
+  { id: '3', name: 'Вор', icon: '🗡️', description: 'Специалист по скрытности, взлому и ядам' },
+  { id: '4', name: 'Жрец', icon: '☀️', description: 'Исцеляет союзников и карает нежить светом' },
+  { id: '5', name: 'Следопыт', icon: '🏹', description: 'Меткий стрелок и знаток дикой природы' },
+  { id: '6', name: 'Бард', icon: '🪕', description: 'Вдохновляет песнями и забалтывает любого врага' }
+]
 
 function App() {
-
   const [gold, setGold] = useState(20)
   const [weapon, setWeapon] = useState('')
   const [dice, setDice] = useState(0)
+  const [heroName, setHeroName] = useState('')
+  const [heroClass, setHeroClass] = useState('')
 
   return (
     <>
       <h1 className='main-title'>Создай своего героя!</h1>
       <h3 className='main-subtitle'>Выбери для твоего приключения</h3>
+
+      <div className="class-selection">
+        <h3>Выберите класс: {heroClass || 'Класс не выбран'}</h3>
+        <div>
+          {classesList.map((item) => (
+            <div className='class-item'  
+            
+              style={{
+                border: heroClass === item.name ? '2px solid gold' : '2px solid gray'
+              }}
+              key={item.id}
+              onClick={() => setHeroClass(item.name)}
+            >
+              <div>
+                {item.icon} {item.name}
+                <div>
+                  {item.description}
+                </div>
+              </div>
+            </div>
+          ))}
+
+        </div>
+      </div >
 
       <div className="cards">
         <RaceCard
@@ -57,6 +89,7 @@ function App() {
 
       </div>
 
+
       <h3>Твое текущее оружие: {weapon || 'Кулаки 👊'}</h3>
 
       <h3>Твое стартовую золото: {gold} 🪙</h3>
@@ -78,6 +111,16 @@ function App() {
           Бросить кубик <br /> на Удачу
         </button>
         <h2>{dice}</h2>
+      </div>
+
+      <div className="form-group">
+        <label>Имя героя: </label>
+        <input
+          type="text"
+          value={heroName}
+          onChange={(e) => setHeroName(e.target.value)}
+          placeholder='ur name' />
+        <p>Ur name: {heroName || 'no name'}</p>
       </div>
     </>
   )
