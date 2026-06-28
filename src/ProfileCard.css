@@ -1,0 +1,31 @@
+/* 📱 Стили по умолчанию (для мобильных экранов) */
+.profile-card {
+  display: flex;
+  flex-direction: column; /* Элементы встают друг под друга */
+  align-items: center;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px; /* Отступ снизу до текста */
+}
+
+/* 💻 Стили для десктопов (экраны от 768px и шире) */
+@media (min-width: 768px) {
+  .profile-card {
+    flex-direction: row; /* Переключаем элементы в один ряд */
+    justify-content: flex-start;
+    padding: 25px;
+  }
+
+  .avatar {
+    margin-bottom: 0; /* Убираем мобильный отступ */
+    margin-right: 20px; /* Делаем отступ справа до текста */
+    width: 120px; /* На большом экране аватарка может быть больше */
+    height: 120px;
+  }
+}

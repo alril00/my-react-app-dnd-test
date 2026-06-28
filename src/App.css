@@ -1,14 +1,24 @@
+/* body {
+   background-color: rgb(114, 114, 114); 
+   color: #212121; 
+}
+
+button {
+   background-color: #333; 
+} */
+
 .main-title {
   border: 2px solid #8b0000;
   padding: 15px;
   margin: 10px;
   border-radius: 8px;
-  background-color: #fff8dc;
-  color: #333;
+  background-color: #fbefc2;
+  /* background-color: #cac4ae; */
+  /* color: #333; */
 }
 
 .dice {
-  margin-top: 25px;
+  /* margin-top: 25px; */
   display: flex;
   align-items: center;
 }
@@ -17,7 +27,7 @@
   /* font-size: 20px;
   border-radius: 3px;
   /* border: 2px solid #8b0000; */
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
   margin-right: 10px;
 }
 
@@ -26,5 +36,30 @@
   cursor: pointer;
   margin: 5px;
   border: 2px solid gray;
- 
+  /* background: #2c2c2c; */
+  /* color: white; */
+  padding: 20px;
+  border-radius: 10px;
+  transition: all 0.2s ;
 }
+.class-item:hover {
+  transform: translateY(-5px); /* Карточка плавно приподнимается вверх на 5 пикселей */
+  background: #666666; /* Цвет становится чуть светлее */
+}
+
+.class-item:active {
+  transform: translateY(-1px); /* Карточка опускается обратно (эффект нажатия кнопки) */
+  box-shadow: 0 2px 5px rgba(255, 215, 0, 0.2); /* Тень уменьшается, как будто карточка прижалась к столу */
+}
+.cards {
+  display: flex;
+}
+
+.tavern {
+  margin-top: 30px;
+  padding: 15px;
+  border: 2px dashed #8b5a2b;
+  border-radius: 8px;
+  background-color: #fdf6e3;
+}
+
