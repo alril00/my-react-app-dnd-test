@@ -1,27 +1,48 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './App.css'
 import './ProfileCard.css';
-import CharacterForm from  './CharacterForm.tsx';
+import CharacterForm from './CharacterForm.tsx';
+import Wallet from './Wallet.tsx'
+import { GoldContext, GoldProvider } from './GoldContext.tsx';
+import { ThemeProvider, useTheme } from './ThemeContext.tsx';
+import Inventory from './Inventory.tsx';
+import Cart from './Cart.tsx';
+import UseCounter from './Counter.tsx';
+import Game from './Game.tsx'
+import useLocalStorage from './Game.tsx'
 
-interface RaceCardProps {
-  raceName: string;
-  description: string;
-  bonus: string;
-  onSelect: () => void;
-}
 
-function RaceCard(props: RaceCardProps) {
-  return (
-    <div className="card">
-      <ul>
-        <li>{props.raceName}</li>
-        <li>{props.description}</li>
-        <li>{props.bonus}</li>
-        <button onClick={props.onSelect}>Взять оружие</button>
-      </ul>
-    </div >
-  )
-}
+/**
+ * Считает общую стоимость товаров в корзине с учетом скидки.
+ * * @param {number} price - Чистая цена товара.
+ * @param {number} quantity - Количество предметов.
+ * @param {number} discount - Процент скидки (от 0 до 100).
+ * @returns {number} Итоговая стоимость, округленная до копеек.
+ */
+// function calculateTotal(price, quantity, discount) {
+//   const total = price * quantity;
+//   return total - (total * discount / 100);
+// }
+
+// interface RaceCardProps {
+//   raceName: string;
+//   description: string;
+//   bonus: string;
+//   onSelect: () => void;
+// }
+
+// function RaceCard(props: RaceCardProps) {
+//   return (
+//     <div className="card">
+//       <ul>
+//         <li>{props.raceName}</li>
+//         <li>{props.description}</li>
+//         <li>{props.bonus}</li>
+//         <button onClick={props.onSelect}>Взять оружие</button>
+//       </ul>
+//     </div >
+//   )
+// }
 
 // function ProfileCard(props: { name: string; title: string }) {
 //   return (
@@ -35,6 +56,7 @@ function RaceCard(props: RaceCardProps) {
 //   );
 // }
 
+// calculateTotal()
 const classesList = [
   { id: '1', name: 'Воин', icon: '⚔️', description: 'Мастер ближнего боя и тяжелой брони' },
   { id: '2', name: 'Маг', icon: '🔮', description: 'Повелевает стихиями и читает древние заклинания' },
@@ -43,9 +65,38 @@ const classesList = [
   { id: '5', name: 'Следопыт', icon: '🏹', description: 'Меткий стрелок и знаток дикой природы' },
   { id: '6', name: 'Бард', icon: '🪕', description: 'Вдохновляет песнями и забалтывает любого врага' }
 ]
+const Layout = () => <div> <Page /> </div>
+const Page = () => {
+  const { gold, spendGold } = useContext(GoldContext)
+  return (
+    <div style={{ border: '2px dashed #8B4513', padding: '15px', borderRadius: '8px', background: '#FFF8DC' }}>
+      <h3>🏪 Лавка торговца</h3>
+      <p >💰 Твой кошелек: <strong style={{ color: 'gold' }}>{gold}</strong></p>
+      <p>🗡️ Стальной меч — Цена: <span style={{ color: 'red' }}>30</span></p>
+
+      <button onClick={() => spendGold(30)}>Купить меч </button>
+
+    </div>
+  )
+}
+
+const Header = () => {
+  const { theme, toggleTheme } = useTheme()
+
+  return (
+    <header>
+      <span>Текущая тема: {theme}</span>
+      <button onClick={toggleTheme}>
+        {theme === 'light' ? '🌙 Тёмная' : '☀️ Светлая'}
+      </button>
+    </header>
+  )
+}
+
+
 
 function App() {
-  const [gold, setGold] = useState(50)
+  // const [gold, setGold] = useState(50)
   // const [weapon, setWeapon] = useState('')
   const [dice, setDice] = useState(0)
   const [heroName, setHeroName] = useState('')
@@ -108,10 +159,41 @@ function App() {
 
   return (
     <>
+
+      <Game />
+
+      <UseCounter />
+
+      <Cart />
+
+      <hr />
+
+      <Inventory />
+
+      <hr />
+
+      <ThemeProvider>
+        <Header />
+        <h1>Добро пожаловать в приложение!</h1>
+      </ThemeProvider >
+
+      <Wallet />
+
+      <GoldProvider>
+        <div
+          style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '500px' }}
+        >
+          <h2>🛡️ Панель Игрока</h2>
+          <Layout />
+
+        </div>
+      </GoldProvider>
+
+
+
       <h1 className='main-title'>Создай своего героя!</h1>
 
       <CharacterForm />
-
 
       <div
         className={`chest-card ${isHovered ? 'highlighted' : ''}`}
@@ -193,17 +275,17 @@ function App() {
         </div>
       </div >
 
-      <h3>Твое стартовую золото: {gold} 🪙</h3>
-      <div className="buttons">
-        <button
-          onClick={() => setGold(gold + 5)}>
-          Обыскать сундук (+5)
-        </button>
-        <button
-          onClick={() => setGold(gold - 2)}>
-          Купить эль (-2)
-        </button>
-      </div>
+      {/* <h3>Твое стартовую золото: {gold} 🪙</h3> */}
+      {/* <div className="buttons">
+          <button
+            onClick={() => setGold(gold + 5)}>
+            Обыскать сундук (+5)
+          </button>
+          <button
+            onClick={() => setGold(gold - 2)}>
+            Купить эль (-2)
+          </button>
+        </div> */}
 
       <div className="dice">
         <button onClick={() => setDice(Math.floor(Math.random() * 20) + 1)}
@@ -248,5 +330,6 @@ function App() {
     </>
   )
 }
+
 
 export default App
